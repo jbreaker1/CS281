@@ -1,0 +1,189 @@
+import java.util.*;
+
+public class BinaryTree implements Iterable{
+	private Node root;
+	private Node cursor;
+	public BinaryTree()// constructs an empty tree
+	{
+		root = null;
+	}
+	public BinaryTree(Object obj) //constructs a tree with just a root node decorated with (i.e., referring to) obj
+	{
+		root = new Node(root,null,null,obj);
+		cursor = root;
+	}
+	public boolean contains(Object obj) //returns true iff the tree contains an object equivalent to obj
+	{
+		Stack<Node> parentStack = new Stack<Node>();
+		Node temp = root;
+		while (!parentStack.isEmpty() || temp != null)
+		{
+				    if (temp != null) 
+				    {
+				    	if(temp.getValue() == obj)
+				    		return true;
+				    }
+				    if (temp.getRight() != null) 
+				    {
+				    	parentStack.push(temp.getRight());
+				    	temp = temp.getLeft();
+				    }
+				    else     
+				      temp = (Node) parentStack.pop();
+		}
+		return false;
+	}
+	public boolean similar(Object obj) //returns true iff obj is a similar binary tree- i.e., obj must have identical structure (only)
+	{
+		return similarHelper(root,(Node) obj);
+	}
+	public boolean similarHelper(Node root, Node obj)
+	{
+		if (root == null && obj == null)
+			return true;
+		if ((root == null && obj != null)
+				|| (root != null && obj == null))
+			return false;
+		return similarHelper(root.getLeft(), ((Node) obj).getLeft())
+				&& similarHelper(root.getRight(), ((Node) obj).getRight());
+		
+	}
+	public boolean equals(Object obj) //returns true iff obj is an equivalent binary tree- i.e., obj must have identical structure and equivalent objects
+	{
+		ArrayList<Object> x = new ArrayList<Object>();
+		ArrayList<Object> x2 = new ArrayList<Object>();
+		Stack<Node> parentStack = new Stack<Node>();
+		Node temp = root;
+		while (!parentStack.isEmpty() || temp != null)
+		{
+				    if (temp != null) 
+				    {
+				    	x.add(temp.getValue());
+				    }
+				    if (temp.getRight() != null) 
+				    {
+				    	parentStack.push(temp.getRight());
+				    	temp = temp.getLeft();
+				    }
+				    else     
+				      temp = (Node) parentStack.pop();
+		}
+		Stack<Node> parentStack2 = new Stack<Node>();
+		Node temp2 = ((Node)obj).getFather();
+		while (!parentStack2.isEmpty() || temp2 != null)
+		{
+				    if (temp2 != null) 
+				    {
+				    	x2.add(temp2.getValue());
+				    }
+				    if (temp2.getRight() != null) 
+				    {
+				    	parentStack2.push(temp2.getRight());
+				    	temp2 = temp2.getLeft();
+				    }
+				    else     
+				      temp2 = (Node) parentStack.pop();
+		}
+		int i = 0;
+		while(i != x.size() || i != x2.size())
+		{
+			if(x.get(i) != x2.get(i))
+				return false;
+			i++;
+		}
+		return true;
+	}
+	public boolean isEmpty() //should do the obvious thing- and the same for public int size() and public int hashCode()
+	{
+		return root == null;
+	}
+	public java.util.Iterator iterator() //should return a preorder iterator over the tree, whereas public Iterator inOrder() should return an inorder iterator over the tree
+	{
+		return (java.util.Iterator) new Iterator(root);
+	}
+	public boolean putCursorAtRoot() //returns false if this is an empty tree
+	{
+		if(root == null)
+			return false;
+		else
+		{
+			cursor = root;
+			return true;
+		}
+	}
+	
+	public boolean putCursorAtLeftSon()
+	{
+		if(cursor.getLeft() != null)
+		{
+			cursor = cursor.getLeft();
+			return true;
+		}
+		else
+			return false;
+	}
+	public boolean putCursorAtRightSon()
+	{
+		if(cursor.getRight() != null)
+			{
+				cursor.getRight();
+				return true;
+			}
+		else
+			return false;
+	}
+	public boolean putCursorAtFather()
+	{
+		if(cursor.getFather() != null)
+		{
+			cursor.getFather();
+			return true;
+		}
+		else
+			return false;
+	}
+	public boolean attachLeftSonAtCursor(Object obj) //returns false if a left son already exists
+	{
+		if(cursor.getLeft()!= null)
+			return false;
+		else
+		{
+			Node n = new Node(cursor,null, null, obj);
+			cursor.setLeft(n);
+			return true;
+		}
+	}
+	public boolean attachRightSonAtCursor(Object obj) //returns false if a right son already exists
+	{
+		if(cursor.getRight()!= null)
+			return false;
+		else
+		{
+			Node n = new Node(cursor, null, null, obj);
+			cursor.setRight(n);
+			return true;
+		}
+	}
+	public boolean pruneFromCursor() //removes everything that descends from the cursor, including the node to which the cursor refers, then relocates the cursor to the root node, returning true iff something (including the cursor) changed
+	{
+		if(cursor != root)
+		{
+			cursor.setLeft(null);
+			cursor.setRight(null);
+			cursor = root;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean hasNext() {
+		return hasNext();
+	}
+	public Node next() {
+		// TODO Auto-generated method stub
+		return next();
+	}
+}
