@@ -1,0 +1,34 @@
+import java.util.*;
+public class WordFrequencies extends java.lang.Object
+{
+	public static void main(String args[]) {
+		Scanner sc = new Scanner(System.in); 
+		HashMap<String,Integer> x = new HashMap<String,Integer>();
+		String words = sc.nextLine();
+		String str = words.toUpperCase();
+		for(int i = 0; i <= str.length(); i++)
+		{
+			String s = "";
+			while(i < str.length() && !words.substring(i, i+1).equals(" ") && !words.substring(i, i+1).equals(".") && !words.substring(i, i+1).equals("?") &&
+					!words.substring(i, i+1).equals("!") && !words.substring(i, i+1).equals(",") && !words.substring(i, i+1).equals(":")
+					&& !words.substring(i, i+1).equals(";")&& !words.substring(i, i+1).equals("(")&& !words.substring(i, i+1).equals(")"))
+			{
+				s += str.charAt(i);
+				i++;
+			}
+			if(!s.equals(""))
+			{
+					if(x.containsKey(s))
+				{
+					int adder = x.get(s) + 1;
+					x.put(s, adder);
+				}
+				else
+				{
+					x.put(s, 1);
+				}
+			}
+		}
+			System.out.println(x);
+	}
+}
