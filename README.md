@@ -7,3 +7,6 @@ LinkedDeque: 30/35
 
 Binary Tree: 0/45
  * Does not compile (because calling getFather method that did not exist, among other compiler errors)
+
+WordFrequencies: 20/35
+ *Missing over half of the words in the word/counts. The words that were included in output had accurate counts though.
